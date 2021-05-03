@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: Document Store API
+  version: 1.1.0
+servers:
+  - url: http://localhost:4000/api/docs/
+    description: Local Developerment Server
+paths:
+  /texts:
+    get:
+      tags:
+        - Text Documents
+      summary: return a list of existing text documents
+      operationId: listTextDocuments
+      responses:
+        '200':
+          $ref: '#/components/responses/TextDocListResponse'
+    post:
+      tags:
+        - Text Documents
+      summary: create a single text document
+      operationId: createTextDocument
+      requestBody:
+        $ref: '#/components/requestBodies/TextDocRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/TextDocResponse'
+        '400':
+          description: bad request
+  /text/{id}:
+    get:
+      tags:
+        - Text Documents
+      summary: return a single text document matching the id
+      operationId: getTextDocument
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/TextDocResponse'
+        '404':
+          description: not found
+    delete:
+      tags:
+        - Text Documents
+      summary: delete a single text document matching the id
+      operationId: deleteTextDocument
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: deleted
+        '404':
+          description: not found
+components:
+  schemas:
+    TextDocRequest:
+      description: a text document
+      type: object
+      properties:
+        title:
+          type: string
+          example: My Textdocument
+        content:
+          type: string
+          example: This is the text content of a document
+    TextDocResponse:
+      description: a stored text document
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d
+        title:
+          type: string
+          example: My Textdocument
+        content:
+          type: string
+          example: This is the text content of a document
+        statistics:
+          $ref: '#/components/schemas/TextDocStatistics'
+
+    TextDocStatistics:
+      description: some statistics like annotation counts
+      type: object
+      properties:
+        annotationCount:
+          type: object
+          properties:
+            document:
+              type: number
+              example: 2
+            documentPart:
+              type: number
+              example: 3
+  responses:
+    TextDocResponse:
+      description: a stored text document
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/TextDocResponse'
+    TextDocListResponse:
+      description: a list of stored text documents
+      content:
+        application/json; charset=utf-8:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/TextDocResponse'
+  requestBodies:
+    TextDocRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TextDocRequest'
+
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: The unique identifier of a document
+      schema:
+        type: string
+
+

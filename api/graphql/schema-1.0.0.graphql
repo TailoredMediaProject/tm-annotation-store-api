@@ -1,0 +1,149 @@
+#Scalars
+scalar URL
+
+scalar Void
+
+# Interfaces
+"All resources must have at least *id* and *type*"
+interface ResourceI {
+    id: URL!
+    type: URL!
+}
+
+"A blank node just have just a *type*"
+interface BlankI {
+    type: URL!
+}
+
+# Unions
+"all supported targets"
+union Target = TargetResource | SpecificResource
+
+"all supported bodies"
+union Body = BodyResource | BodyText
+
+"all supported selectors"
+union Selector = TextPositionSelector | FragmentSelector
+
+# Types
+"a annotation that links a target (thing to tag) with body (tag)"
+type Annotation implements ResourceI {
+    id: URL!
+    type: URL!
+    "tag, e.g. the resource 'Mick Schumacher'"
+    body: Body! #resource Barack Obama
+    "thing to tag, e.g. a news article or a part of an image"
+    target: Target! #Part of a text
+}
+
+"a body represented by an entity, e.g. from an existing taxonomy"
+type BodyResource implements ResourceI {
+    id: URL!
+    type: URL!
+    label: String
+}
+
+"a freetext body (more for demo purposes)"
+type BodyText implements BlankI {
+    type: URL!
+    value: String!
+}
+
+"a body represented by an entity, e.g. a news artile or an image"
+type TargetResource implements ResourceI {
+    id: URL!
+    type: URL!
+}
+
+"a part of an entity, e.g. a fragment of an image or a part of a text"
+type SpecificResource implements BlankI {
+    type: URL!
+    "the base of the selector, e.g. the image resource"
+    source: URL!
+    "the specification, e.g. a rectangular area that determines a part of the image"
+    selector: Selector!
+}
+
+"a selector to identify part of textual resources via start and end character"
+type TextPositionSelector implements BlankI {
+    type: URL!
+    start: Int
+    end: Int
+}
+
+"a selector to identify a part of a media resource. the value must be interpreted via the specified standard"
+type FragmentSelector implements BlankI {
+    type: URL!
+    "the standard that is used to interpret the value"
+    conformsTo: URL!
+    "the value based on the standard"
+    value: String!
+}
+
+# Query
+type Query {
+    "return all annotations that match the filter criteria"
+    annotations(filter: Filter): [Annotation]!
+    "return one annotation by id"
+    annotation(id: URL!): Annotation
+}
+
+# Query Input
+"a filter, currently only targetId (id of target or source of SpecificResource) is supported"
+input Filter {
+    targetId: String!
+}
+
+# Mutation
+type Mutation {
+    "add a annotation: select *one* type of body and *one* type of target (will be improved as soon as interfaces for inputs are supported"
+    addAnnotation(
+        bodyResource: BodyResourceInput,
+        bodyText: BodyTextInput,
+        targetResource: TargetResourceInput,
+        targetTextPositionSelector: TargetTextPositionSelectorInput,
+        targetFragmentSelector: TargetFragmentSelectorInput
+    ): Annotation
+    "delete one annotation by id"
+    deleteAnnotation(
+        id: URL!
+    ): Void
+    "delete all annotations that match the filter criteria"
+    deleteAnnotations(
+        filter: Filter!
+    ): Void
+}
+
+# Mutation Input
+"a basic body resource, e.g. an entity of an existing taxonomy. Label is optinal and only for demo purposes"
+input BodyResourceInput {
+    id: URL!
+    type: URL!
+    label: String
+}
+
+"a textual body (like a comment), mostly for demo purposes"
+input BodyTextInput {
+    value: String!
+}
+
+"a target resource, e.g. an image"
+input TargetResourceInput {
+    id: URL!, type: URL!
+}
+
+"a part on a text; start and end are specified via character position"
+input TargetTextPositionSelectorInput {
+    source: URL!
+    start: Int!
+    end: Int!
+}
+
+"a part of an entity, selection is done using a choosable standard"
+input TargetFragmentSelectorInput {
+    source: URL!
+    "the standard that is used to interpret the value"
+    conformsTo: String!
+    "a value using the specified standard"
+    value: String!
+}
