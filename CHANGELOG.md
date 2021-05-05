@@ -1,5 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## 1.1.1
+*2021-05-05*
+* fix issue on docs api
+* add *doc-store-api spec, version 1.2.0*
 ## 1.1.0
 *2021-04-28*
 * add statistics to document spec
