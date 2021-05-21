@@ -19,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: Publish-NPM-Package
     steps:
-      - name: Repository Dispatch
       - run: echo "OPEN_API_VERSION=$(cat ./api/doc/spec.yaml | grep "version:" | sed 's/[[:alpha:]|(|[:space:]|:]//g')" >> $GITHUB_ENV
       - run: echo $OPEN_API_VERSION
       - uses: peter-evans/repository-dispatch@v1
