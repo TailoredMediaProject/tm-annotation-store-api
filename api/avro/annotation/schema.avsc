@@ -1,0 +1,82 @@
+{
+  "namespace": "com.github.tailoredmediaproject",
+  "type": "record",
+  "name": "Annotation",
+  "fields": [
+    {
+      "name": "body",
+      "type": [
+        {
+          "type": "record",
+          "name": "BodyResource",
+          "fields": [
+            {"name": "id", "type": "string"},
+            {"name": "url", "type": "string"},
+            {"name": "label", "type": ["string","null"], "default": null}
+          ]
+        },
+        {
+          "type": "record",
+          "name": "BodyText",
+          "fields": [
+            {"name": "value", "type": "string"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "target",
+      "type": [
+        {
+          "type": "record",
+          "name": "TargetResource",
+          "fields": [
+            {"name": "id", "type": "string"},
+            {"name": "url", "type": "string"}
+          ]
+        },
+        {
+          "type": "record",
+          "name": "TargetFragmentSelector",
+          "fields": [
+            {"name":  "source", "type":  "string"},
+            {"name":  "conformsTo", "type":  "string"},
+            {"name":  "value", "type":  "string"}
+          ]
+        },
+        {
+          "type": "record",
+          "name": "TargetTextSelector",
+          "fields": [
+            {"name": "source", "type": "string"},
+            {
+              "name": "selector",
+              "type": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "record",
+                    "name": "TextPositionSelector",
+                    "fields": [
+                      {"name":  "start", "type": "int"},
+                      {"name":  "end", "type": "int"}
+                    ]
+                  },
+                  {
+                    "type": "record",
+                    "name": "TextQuoteSelector",
+                    "fields": [
+                      {"name":  "exact", "type": "string"},
+                      {"name":  "prefix", "type": ["string","null"], "default": null},
+                      {"name":  "suffix", "type": ["string","null"], "default": null}
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
