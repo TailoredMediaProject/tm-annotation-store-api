@@ -20,10 +20,10 @@ jobs:
     needs: Publish-NPM-Package
     steps:
       - run: echo "OPEN_API_VERSION=$(cat ./api/doc/spec.yaml | grep "version:" | sed 's/[[:alpha:]|(|[:space:]|:]//g')" >> $GITHUB_ENV
-      - run: echo $OPEN_API_VERSION
+      - run: echo "${{ env.OPEN_API_VERSION }}"
       - uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: TailoredMediaProject/tm-openapi-client-typescript
           event-type: notify-client-generator
-          client-payload: '{"openAPIVersion": "${{ $OPEN_API_VERSION }}"}'
+          client-payload: '{"openAPIVersion": "${{ env.OPEN_API_VERSION }}"}'
