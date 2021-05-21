@@ -28,4 +28,4 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: TailoredMediaProject/tm-openapi-client-typescript
           event-type: notify-client-generator
-          client-payload: '{"openAPIVersion": "1.0.0" }'
+          client-payload: '{"openAPIVersion": "1.0.1" }'
