@@ -3,7 +3,7 @@
 ## Most recent Version
 | Spec             | Version   | Path                        |
 | ---------------- | --------- | --------------------------- |
-| *Resource-Store API*  | _1.0.0_   | /api/resource/spec.yaml          |
+| *Resource-Store API*  | _1.3.0_   | /api/resource/spec.yaml          |
 | *GraphQL Schema* | _1.0.2_   | /api/graphql/schema.graphql |
 
 ## Usage:
@@ -16,5 +16,5 @@
 
 To use specific versions follow the pattern `/{basePath}/{specPath}/{name}-{version}.{suffix}`, e.g. /api/graphql/schema-1.0.0.graphql.
 
-* *Resource-Store API*: [1.0.0](./CHANGELOG.md#2.0.0)
+* *Resource-Store API*: [1.3.0](./CHANGELOG.md#2.0.0)
 * *GraphQL Schema*: [1.0.0](./CHANGELOG.md#1.0.0), [1.0.1](./CHANGELOG.md#1.0.1), [1.0.2](./CHANGELOG.md#1.0.2)

@@ -1,6 +1,6 @@
 {
   "name": "@redlink/tm-annotation-store-api",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Repo contains all api specs for accessing tm-annotation-store",
   "repository": {
     "type": "git",
