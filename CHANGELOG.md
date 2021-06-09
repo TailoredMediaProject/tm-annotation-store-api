@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## 2.0.3
+## 2.0.5
 *2021-06-09*
 * remove doc api
 * add resource api
