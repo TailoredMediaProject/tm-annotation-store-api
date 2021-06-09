@@ -1,12 +1,25 @@
 openapi: 3.0.3
 info:
-  title: Document Store API
-  version: 1.2.0
+  title: Resource Store API
+  version: 1.0.0
 servers:
-  - url: /api/docs/
-    description: Local Development Server
+  - url: http://localhost:4000/resources/
+    description: Local Developerment Server
 paths:
-  /texts:
+  /annotations/{id}:
+    get:
+      tags:
+        - Annotation Resource
+      summary: return a specific annotation
+      operationId: getAnnotation
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          $ref: '#/components/responses/JsonLdResponse'
+        '404':
+          description: annotation does not exist
+  /docs/texts:
     get:
       tags:
         - Text Documents
@@ -27,7 +40,7 @@ paths:
           $ref: '#/components/responses/TextDocResponse'
         '400':
           description: bad request
-  /texts/{id}:
+  /docs/texts/{id}:
     get:
       tags:
         - Text Documents
@@ -54,6 +67,16 @@ paths:
           description: not found
 components:
   schemas:
+    JsonLdResponse:
+      description: a jsonld response
+      type: object
+      example:
+        '@context': http://tmp.org/resources/context/annotation.jsonld
+        id: http://tmp.org/resources/annotations/123
+        type: http://www.w3.org/ns/oa#Annotation
+        body:
+          type: 'http://www.w3.org/ns/oa#TextualBody'
+          value: 'Mick Schumacher'
     TextDocRequest:
       description: a text document
       type: object
@@ -94,6 +117,12 @@ components:
               type: number
               example: 3
   responses:
+    JsonLdResponse:
+      description: a jsonld response
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/JsonLdResponse'
     TextDocResponse:
       description: a stored text document
       content:
@@ -121,8 +150,6 @@ components:
       name: id
       in: path
       required: true
-      description: The unique identifier of a document
+      description: The unique identifier of a resource
       schema:
         type: string
-
-
