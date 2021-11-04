@@ -2,44 +2,51 @@ var annotations = [
 
     // Metadata annotation
     {
-        id: "string",
+        id: url,
         origin: {
             type: ingest | linking | manual,
-            confidence: int | null,
+            creator: string
         },
+        replaces: url,
+        replacedBy: url,
+        created: date,
         body: {
             id: "string",
             type: MetadataBody,
+            confidence: int | null,
             relation: "rdfs:..." | "own_relation",
-            value: "string" | list,
+            value: string | float | boolean | date | array,
         },
         target: {
             type: ResourceTarget,
-            source: "string",
+            source: string,
         }
     },
 
     //Resource annotation
     {
-        id: "string",
+        id: url,
         origin: {
             type: manual | automatic | linking,
-            confidence: int | null,
-            replaces: "string" | null,
+            creator: string
         },
+        confidence: float,
+        replaces: url,
+        replacedBy: url,
+        created: date,
         body: {
             id: "string",
             type: ResourceBody | PartBody,
             relation: "rdfs:..." | "own_relation",
-            value: "string",
+            resource: "string",
         },
         target: {
-            source: "string",
+            source: string,
             type: ResourceTarget | FragmentTarget,
             selector: {
-                type: TextPositionSelector | TemporalFragmentSelector,
-                start: int | "string",
-                end: int | "string"
+                type: TextPositionSelector | TemporalFragmentSelector | etc,
+                start: int | string,
+                end: int | string
             },
         }
     }
