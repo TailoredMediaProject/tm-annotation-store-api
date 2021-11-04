@@ -1,7 +1,8 @@
 #Scalars
 scalar URL
-
 scalar Void
+scalar Literal
+scalar Date
 
 # Interfaces
 "All resources must have at least *id* and *type*"
@@ -15,48 +16,89 @@ interface BlankI {
     type: URL!
 }
 
+"All Annotations must have at least *id* and *origin*"
+interface AnnotationI{
+    id: URL!
+    replaces: URL
+    replacedBy: URL
+    created: Date!
+    origin: Origin!
+}
+
 # Unions
 "all supported targets"
-union Target = TargetResource | SpecificResource
+union Target = TargetResource | TargetFragment
 
 "all supported bodies"
-union Body = BodyResource | BodyText
+union Body = BodyResource | BodyText | BodyMetadata | BodyPart
 
 "all supported selectors"
-union Selector = TextPositionSelector | TextQuoteSelector | FragmentSelector
+union Selector = TextPositionSelector | TextQuoteSelector | FragmentSelector | TimelineSelector | ViewSelector | ClipSelector
+
+"all literal types and an array of them for Metadata: value"
+union Literal = String | Float | Boolean | Date | Literal
 
 # Types
 "a annotation that links a target (thing to tag) with body (tag)"
-type Annotation implements ResourceI {
+type Annotation implements AnnotationI{
     id: URL!
-    type: URL!
+    origin: Origin!
+    replacedBy: URL
+    replaces: URL
+    created: Date!
     "tag, e.g. the resource 'Mick Schumacher'"
-    body: Body! #resource Barack Obama
+    body: [Body!]! #resource Barack Obama
     "thing to tag, e.g. a news article or a part of an image"
     target: Target! #Part of a text
 }
 
+"origin provides metadata about annotation"
+type Origin{
+    type: String!
+    creator: String!
+}
+
+# Body
 "a body represented by an entity, e.g. from an existing taxonomy"
 type BodyResource implements ResourceI {
     id: URL!
     type: URL!
-    label: String
+    resource: URL!
+    confidence: Float
 }
 
 "a freetext body (more for demo purposes)"
 type BodyText implements BlankI {
     type: URL!
     value: String!
+    confidence: Float
 }
 
-"a body represented by an entity, e.g. a news artile or an image"
-type TargetResource implements ResourceI {
+"a BodyPart for scene annotation"
+type BodyPart implements ResourceI{
     id: URL!
+    type: URL!
+    confidence: Float
+}
+
+"a metadata body"
+type BodyMetadata implements ResourceI{
+    type: URL!
+    id: URL!
+    relation: URL!
+    value: [Literal!]
+    confidence: Float
+}
+
+# Target
+"a body represented by an entity, e.g. a news artile or an image"
+type TargetResource implements BlankI {
+    source: URL!
     type: URL!
 }
 
 "a part of an entity, e.g. a fragment of an image or a part of a text"
-type SpecificResource implements BlankI {
+type TargetFragment implements BlankI {
     type: URL!
     "the base of the selector, e.g. the image resource"
     source: URL!
@@ -64,6 +106,7 @@ type SpecificResource implements BlankI {
     selector: [Selector!]!
 }
 
+# Selector
 "a selector to identify part of textual resources via start and end character"
 type TextPositionSelector implements BlankI {
     type: URL!
@@ -88,6 +131,29 @@ type FragmentSelector implements BlankI {
     value: String!
 }
 
+"a selector for a timeline on the video"
+type TimelineSelector implements BlankI{
+    type: URL!
+    start: Float
+    end: Float
+}
+
+"a selector for specific region of the view"
+type ViewSelector implements BlankI{
+    type: URL!
+    coordX: Int
+    coordY: Int
+    width: Int
+    height: Int
+}
+
+"a selector for a clip: timeline + view"
+type ClipSelector implements BlankI{
+    type: URL!
+    timeLine: TimelineSelector!
+    view: ViewSelector!
+}
+
 # Query
 type Query {
     "return all annotations that match the filter criteria"
@@ -104,10 +170,11 @@ input Filter {
 
 # Mutation
 type Mutation {
-    "add a annotation: select *one* type of body and *one* type of target (will be improved as soon as interfaces for inputs are supported"
+    "add an annotation: select *one* type of body and *one* type of target (will be improved as soon as interfaces for inputs are supported"
     addAnnotation(
         bodyResource: BodyResourceInput,
         bodyText: BodyTextInput,
+        bodyMetadata: BodyMetadataInput,
         targetResource: TargetResourceInput,
         targetTextSelector: TargetTextSelectorInput,
         targetFragmentSelector: TargetFragmentSelectorInput
@@ -128,6 +195,16 @@ input BodyResourceInput {
     id: URL!
     type: URL!
     label: String
+    relation: String
+    value: String
+}
+
+input BodyMetadataInput{
+    type: URL!
+    id: URL!
+    relation: String!
+    value: String!
+
 }
 
 "a textual body (like a comment), mostly for demo purposes"
