@@ -13,7 +13,7 @@ var annotations = [
         body: {
             id: "string",
             type: MetadataBody,
-            confidence: int | null,
+            confidence: float | null,
             relation: "rdfs:..." | "own_relation",
             value: string | float | boolean | date | array,
         },
@@ -45,8 +45,8 @@ var annotations = [
             type: ResourceTarget | FragmentTarget,
             selector: {
                 type: TextPositionSelector | TemporalFragmentSelector | etc,
-                start: int | string,
-                end: int | string
+                start: float,
+                end: float
             },
         }
     }
