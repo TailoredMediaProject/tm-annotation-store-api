@@ -33,7 +33,7 @@ union Target = TargetResource | TargetFragment
 union Body = BodyResource | BodyText | BodyMetadata | BodyPart
 
 "all supported selectors"
-union Selector = TextPositionSelector | TextQuoteSelector | FragmentSelector | TimelineSelector | ViewSelector | ClipSelector
+union Selector = TextPositionSelector | TextQuoteSelector | FragmentSelector
 
 "all literal types and an array of them for Metadata: value"
 union Literal = String | Float | Boolean | Date | Literal
@@ -122,36 +122,36 @@ type TextQuoteSelector implements BlankI {
     suffix: String
 }
 
-"a selector to identify a part of a media resource. the value must be interpreted via the specified standard"
-type FragmentSelector implements BlankI {
-    type: URL!
-    "the standard that is used to interpret the value"
-    conformsTo: URL!
-    "the value based on the standard"
-    value: String!
-}
+#"a selector to identify a part of a media resource. the value must be interpreted via the specified standard"
+#type FragmentSelector implements BlankI {
+#    type: URL!
+#    "the standard that is used to interpret the value"
+#    conformsTo: URL!
+#    "the value based on the standard"
+#    value: String!
+#}
 
 "a selector for a timeline on the video"
-type TimelineSelector implements BlankI{
+type NptTimeSelector implements BlankI{
     type: URL!
     start: Float
     end: Float
 }
 
 "a selector for specific region of the view"
-type ViewSelector implements BlankI{
+type PercentSpatialSelector implements BlankI{
     type: URL!
-    coordX: Int
-    coordY: Int
-    width: Int
-    height: Int
+    x: Float!
+    y: Float!
+    w: Float!
+    h: Float!
 }
 
 "a selector for a clip: timeline + view"
-type ClipSelector implements BlankI{
+type FragmentSelector implements BlankI{
     type: URL!
-    timeLine: TimelineSelector!
-    view: ViewSelector!
+    temporal: NptTimeSelector
+    spatial: PercentSpatialSelector
 }
 
 # Query
