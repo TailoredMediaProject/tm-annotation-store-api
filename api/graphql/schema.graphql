@@ -3,6 +3,9 @@ scalar URL
 scalar Void
 scalar Literal
 scalar Date
+scalar RDF
+scalar Ebucore
+scalar Relation
 
 # Interfaces
 "All resources must have at least *id* and *type*"
@@ -25,6 +28,14 @@ interface AnnotationI{
     origin: Origin!
 }
 
+interface MetadataI{
+    type: URL!
+    id: URL!
+    relation: URL!
+    value: [Literal!]
+    confidence: Float
+}
+
 # Unions
 "all supported targets"
 union Target = TargetResource | TargetFragment
@@ -36,7 +47,10 @@ union Body = BodyResource | BodyText | BodyMetadata | BodyPart
 union Selector = TextPositionSelector | TextQuoteSelector | FragmentSelector
 
 "all literal types and an array of them for Metadata: value"
-union Literal = String | Float | Boolean | Date | Literal
+union Literal = String | Float | Boolean | Date | Literal | RDF | Ebucore
+
+"Constant for all types of different relations"
+union Relation = RDF | Ebucore
 
 # Types
 "a annotation that links a target (thing to tag) with body (tag)"
@@ -56,6 +70,7 @@ type Annotation implements AnnotationI{
 type Origin{
     type: String!
     creator: String!
+    modality: String!
 }
 
 # Body
@@ -82,13 +97,57 @@ type BodyPart implements ResourceI{
 }
 
 "a metadata body"
-type BodyMetadata implements ResourceI{
+type BodyMetadata implements MetadataI{
     type: URL!
     id: URL!
     relation: URL!
     value: [Literal!]
     confidence: Float
 }
+
+#    For `value: Literal` pair
+#    Use the String type and JSON.stringifying the data before setting it on the field.
+#    So everything gets stringified, and later you just JSON.parse the result and
+#    get back the desired object/array/boolean/ etc.
+
+#    getValue(): any {
+#        return JSON.parse(this.value);
+#    }
+
+
+#   New "Sub-Bodies":
+type BodySendung{
+    type: URL!
+    id: URL!
+    relation: RDF
+    value: Ebucore
+    confidence: Float
+}
+
+type BodyBeitrag{
+    type: URL!
+    id: URL!
+    relation: RDF
+    value: Ebucore
+    confidence: Float
+}
+
+type BodyShot{
+    type: URL!
+    id: URL!
+    relation: RDF
+    value: Ebucore
+    confidence: Float
+}
+
+type BodyKeyframe{
+    type: URL!
+    id: URL!
+    relation: RDF
+    value: [Relation]
+    confidence: Float
+}
+
 
 # Target
 "a body represented by an entity, e.g. a news artile or an image"
@@ -150,6 +209,9 @@ type PercentSpatialSelector implements BlankI{
 "a selector for a clip: timeline + view"
 type FragmentSelector implements BlankI{
     type: URL!
+    conformsTo: URL!
+    value: Literal
+    refinedBy: [PercentSpatialSelector]
     temporal: NptTimeSelector
     spatial: PercentSpatialSelector
 }
