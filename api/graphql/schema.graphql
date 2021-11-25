@@ -116,35 +116,35 @@ type BodyMetadata implements MetadataI{
 
 
 #   New "Sub-Bodies":
-type BodySendung{
+type BodySendung implements MetadataI{
     type: URL!
     id: URL!
-    relation: RDF
-    value: Ebucore
+    relation: URL!
+    value: [Literal!]
     confidence: Float
 }
 
-type BodyBeitrag{
+type BodyBeitrag implements MetadataI{
     type: URL!
     id: URL!
-    relation: RDF
-    value: Ebucore
+    relation: URL!
+    value: [Literal!]
     confidence: Float
 }
 
-type BodyShot{
+type BodyShot implements MetadataI{
     type: URL!
     id: URL!
-    relation: RDF
-    value: Ebucore
+    relation: URL!
+    value: [Literal!]
     confidence: Float
 }
 
-type BodyKeyframe{
+type BodyKeyframe implements MetadataI{
     type: URL!
     id: URL!
-    relation: RDF
-    value: [Relation]
+    relation: URL!
+    value: [Literal!]
     confidence: Float
 }
 
