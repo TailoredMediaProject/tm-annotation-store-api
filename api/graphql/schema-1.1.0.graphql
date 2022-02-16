@@ -144,10 +144,10 @@ input Filter {
 type Mutation {
     "add a annotation: select *one* type of body and *one* type of target (will be improved as soon as interfaces for inputs are supported"
     addAnnotation(
-        bodyResource: BodyResourceInput,
-        bodyText: BodyTextInput,
+        resourceMetaBody: ResourceMetaBodyInput,
+        partBody: PartBodyInput,
         targetResource: TargetResourceInput,
-        targetTextSelector: TargetTextSelectorInput,
+        targetTextTempPositionSelector: TargetTextTempPositionSelectorInput,
         targetFragmentSelector: TargetFragmentSelectorInput
     ): Annotation
     "delete one annotation by id"
@@ -162,31 +162,40 @@ type Mutation {
 
 # Mutation Input
 "a basic body resource, e.g. an entity of an existing taxonomy. Label is optinal and only for demo purposes"
-input BodyResourceInput {
-    id: URL!
-    type: URL!
-    label: String
+input OriginInput {
+    type: String!
+    creator: String!
 }
 
-"a textual body (like a comment), mostly for demo purposes"
-input BodyTextInput {
-    value: String!
+input ResourceMetaBodyInput {
+    id: String!
+    confidence: Int
+    type: String!
+    relation: String
+    value: String
+}
+
+input PartBodyInput {
+    id: String!
+    confidence: Int
+    type: String!
 }
 
 "a target resource, e.g. an image"
 input TargetResourceInput {
-    id: URL!, type: URL!
+    id: String!,
+    type: String!
 }
 
 "a part on a text; at least one selector has to be set"
 input TargetTextSelectorInput {
-    source: URL!
+    type: String!
     textPositionSelector: TextPositionSelectorInput
     textQuoteSelector: TextQuoteSelectorInput
 }
 
 "a part of a text; start and end are specified via character position; exact text included, prefix and suffix optional"
-input TextPositionSelectorInput {
+input TargetTextTempPositionSelectorInput {
     start: Int!
     end: Int!
 }
