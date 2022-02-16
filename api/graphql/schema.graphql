@@ -63,14 +63,13 @@ type Annotation implements AnnotationI{
     "tag, e.g. the resource 'Mick Schumacher'"
     body: [Body!]! #resource Barack Obama
     "thing to tag, e.g. a news article or a part of an image"
-    target: Target! #Part of a text
+    target: [Target!]! #Part of a text
 }
 
 "origin provides metadata about annotation"
 type Origin{
     type: String!
     creator: String!
-    modality: String!
 }
 
 # Body
