@@ -1,12 +1,13 @@
 {
   "name": "@redlink/tm-annotation-store-api",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Repo contains all api specs for accessing tm-annotation-store",
+  "keywords": ["redlink", "tm-annotation-store-api"],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/redlinkgmbh/tm-annotation-store-api.git"
+    "url": "git+ssh://git@github.com:TailoredMediaProject/tm-annotation-store-api.git"
   },
   "author": "thomas.kurz@redlink.at",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/redlinkgmbh/tm-annotation-store-api#readme"
+  "homepage": "https://github.com/TailoredMediaProject/tm-annotation-store-api/blob/master/README.md"
 }
