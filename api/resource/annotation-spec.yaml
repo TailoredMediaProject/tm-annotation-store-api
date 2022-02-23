@@ -113,9 +113,18 @@ components:
             relation:
               type: string
             value:
-              type: array
-              items:
-                type: object
+              oneOf:
+                - $ref: '#/components/schemas/DateTime'
+                - type: string
+                - type: number
+                - type: boolean
+                - type: array
+                  items:
+                    oneOf:
+                      - $ref: '#/components/schemas/DateTime'
+                      - type: string
+                      - type: number
+                      - type: boolean
     ResourceBody:
       description: ''
       allOf:
@@ -267,7 +276,6 @@ components:
       properties:
         id:
           type: string
-          readOnly: true
         origin:
           allOf:
             - $ref: '#/components/schemas/Origin'
