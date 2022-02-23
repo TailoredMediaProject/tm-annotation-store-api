@@ -3,6 +3,7 @@ on:
   push:
     tags:
       - v*
+  workflow_dispatch:
 jobs:
   Publish-NPM-Package:
     runs-on: ubuntu-latest
