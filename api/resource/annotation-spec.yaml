@@ -56,7 +56,7 @@ components:
         - linking
         - manual
     Origin:
-      description: ''
+      description: 'The origin'
       type: object
       required:
         - type
