@@ -58,6 +58,9 @@ components:
     Origin:
       description: ''
       type: object
+      required:
+        - type
+        - creator
       properties:
         type:
           allOf:
