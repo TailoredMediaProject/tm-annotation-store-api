@@ -258,21 +258,22 @@ components:
       allOf:
         - $ref: '#/components/schemas/Selector'
         - type: object
-          required:
-            - temporal
-            - spatial
           properties:
             temporal:
               allOf:
                 - $ref: '#/components/schemas/TemporalFragmentSelector'
-              nullable: true
             spatial:
               allOf:
                 - $ref: '#/components/schemas/PercentSpatialSelector'
-              nullable: true
     Annotation:
       description: ''
       type: object
+      required:
+        - id
+        - origin
+        - created
+        - body
+        - target
       properties:
         id:
           type: string
@@ -281,17 +282,19 @@ components:
             - $ref: '#/components/schemas/Origin'
         replaces:
           type: string
-          nullable: true
         replacedBy:
           type: string
-          nullable: true
         created:
           allOf:
             - $ref: '#/components/schemas/DateTime'
           readOnly: true
         body:
-          allOf:
+          oneOf:
             - $ref: '#/components/schemas/Body'
+            - type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Body'
         target:
           oneOf:
             - $ref: '#/components/schemas/Target'
