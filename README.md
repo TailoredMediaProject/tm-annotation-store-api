@@ -1,10 +1,11 @@
 # Tailored Media Annotation Store API
 
 ## Most recent Version
-| Spec             | Version   | Path                        |
-| ---------------- | --------- | --------------------------- |
-| *Resource-Store API*  | _1.3.0_   | /api/resource/spec.yaml          |
-| *GraphQL Schema* | _1.0.2_   | /api/graphql/schema.graphql |
+| Spec                   | Version | Path                               |
+|------------------------|---------|------------------------------------|
+| *Resource-Store API*   | _1.3.0_ | /api/resource/spec.yaml            |
+| *Annotation-Store API* | _1.0.0_ | /api/resource/annotation-spec.yaml |
+| *GraphQL Schema*       | _1.0.2_ | /api/graphql/schema.graphql        |
 
 ## Usage:
 ### NPM

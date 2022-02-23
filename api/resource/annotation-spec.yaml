@@ -79,6 +79,8 @@ components:
         - id
         - confidence
         - type
+      discriminator:
+        propertyName: type
       properties:
         id:
           type: string
@@ -144,6 +146,8 @@ components:
       required:
         - source
         - type
+      discriminator:
+        propertyName: type
       properties:
         source:
           type: string
@@ -162,13 +166,8 @@ components:
             - selector
           properties:
             selector:
-              oneOf:
+              allOf:
                 - $ref: '#/components/schemas/Selector'
-                - $ref: '#/components/schemas/TextPositionSelector'
-                - $ref: '#/components/schemas/TextQuoteSelector'
-                - $ref: '#/components/schemas/MediaFragmentSelector'
-                - $ref: '#/components/schemas/TemporalFragmentSelector'
-                - $ref: '#/components/schemas/PercentSpatialSelector'
     SelectorType:
       description: ''
       type: string
@@ -183,6 +182,8 @@ components:
       type: object
       required:
         - type
+      discriminator:
+        propertyName: type
       properties:
         type:
           allOf:
@@ -281,23 +282,22 @@ components:
             - $ref: '#/components/schemas/DateTime'
           readOnly: true
         body:
-          oneOf:
-            - $ref: '#/components/schemas/MetadataBody'
-            - $ref: '#/components/schemas/ResourceBody'
-            - $ref: '#/components/schemas/PartBody'
-            - $ref: '#/components/schemas/TextBody'
+          allOf:
+            - $ref: '#/components/schemas/Body'
         target:
-            type: array
-            items:
-              oneOf:
-                - $ref: '#/components/schemas/TargetResource'
-                - $ref: '#/components/schemas/FragmentResource'
+          oneOf:
+            - $ref: '#/components/schemas/Target'
+            - type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Target'
   parameters:
     AnnotationId:
       name: annotationId
       in: path
       schema:
         $ref: '#/components/schemas/Id'
+      required: true
   requestBodies:
     AnnotationRequestBody:
       description: ''
