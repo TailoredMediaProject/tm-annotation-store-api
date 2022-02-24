@@ -42,6 +42,9 @@ tags:
     description: ''
 components:
   schemas:
+    AnyValue:
+      description: Can be any value, including `null`
+      nullable: true
     Id:
       type: string
     DateTime:
@@ -60,12 +63,12 @@ components:
       type: object
       properties:
         type:
-          allOf:
-            - $ref: '#/components/schemas/OriginType'
+          $ref: '#/components/schemas/OriginType'
         creator:
           type: string
+          nullable: false
     BodyType:
-      description: ''
+      description: 'Specifies the unique body subclass'
       type: string
       enum:
         - MetadataBody
@@ -73,7 +76,7 @@ components:
         - TextBody
         - PartBody
     Body:
-      description: ''
+      description: 'Base class of a body'
       type: object
       required:
         - id
@@ -87,10 +90,9 @@ components:
         confidence:
           type: number
           minimum: 0
-          maximum: 100
+          maximum: 1
         type:
-          allOf:
-            - $ref: '#/components/schemas/BodyType'
+          $ref: '#/components/schemas/BodyType'
     TextBody:
       description: ''
       allOf:
@@ -112,10 +114,9 @@ components:
           properties:
             relation:
               type: string
+              nullable: true
             value:
-              type: array
-              items:
-                type: object
+              $ref: '#/components/schemas/AnyValue'
     ResourceBody:
       description: ''
       allOf:
@@ -152,8 +153,7 @@ components:
         source:
           type: string
         type:
-          allOf:
-            - $ref: '#/components/schemas/TargetType'
+          $ref: '#/components/schemas/TargetType'
     TargetResource:
       allOf:
         - $ref: '#/components/schemas/Target'
@@ -166,8 +166,7 @@ components:
             - selector
           properties:
             selector:
-              allOf:
-                - $ref: '#/components/schemas/Selector'
+              $ref: '#/components/schemas/Selector'
     SelectorType:
       description: ''
       type: string
@@ -186,8 +185,7 @@ components:
         propertyName: type
       properties:
         type:
-          allOf:
-            - $ref: '#/components/schemas/SelectorType'
+          $ref: '#/components/schemas/SelectorType'
     TextPositionSelector:
       allOf:
         - $ref: '#/components/schemas/Selector'
@@ -254,12 +252,10 @@ components:
             - spatial
           properties:
             temporal:
-              allOf:
-                - $ref: '#/components/schemas/TemporalFragmentSelector'
+              $ref: '#/components/schemas/TemporalFragmentSelector'
               nullable: true
             spatial:
-              allOf:
-                - $ref: '#/components/schemas/PercentSpatialSelector'
+              $ref: '#/components/schemas/PercentSpatialSelector'
               nullable: true
     Annotation:
       description: ''
@@ -267,10 +263,9 @@ components:
       properties:
         id:
           type: string
-          readOnly: true
+          nullable: false
         origin:
-          allOf:
-            - $ref: '#/components/schemas/Origin'
+          $ref: '#/components/schemas/Origin'
         replaces:
           type: string
           nullable: true
@@ -278,19 +273,14 @@ components:
           type: string
           nullable: true
         created:
-          allOf:
-            - $ref: '#/components/schemas/DateTime'
+          $ref: '#/components/schemas/DateTime'
           readOnly: true
         body:
-          allOf:
-            - $ref: '#/components/schemas/Body'
+          $ref: '#/components/schemas/Body'
         target:
-          oneOf:
-            - $ref: '#/components/schemas/Target'
-            - type: array
-              items:
-                allOf:
-                  - $ref: '#/components/schemas/Target'
+          type: array
+          items:
+            $ref: '#/components/schemas/Target'
   parameters:
     AnnotationId:
       name: annotationId
@@ -308,8 +298,7 @@ components:
               - $ref: '#/components/schemas/Annotation'
               - type: array
                 items:
-                  allOf:
-                    - $ref: '#/components/schemas/Annotation'
+                  $ref: '#/components/schemas/Annotation'
   responses:
     AnnotationResponse:
       description: ''
@@ -324,8 +313,7 @@ components:
           schema:
             type: array
             items:
-              allOf:
-                - $ref: '#/components/schemas/Annotation'
+              $ref: '#/components/schemas/Annotation'
     IdResponse:
       description: 'The ID returned as sole id or as dictionary where the key is the old key and the value is the new key'
       content:
