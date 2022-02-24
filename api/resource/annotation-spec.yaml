@@ -59,8 +59,11 @@ components:
         - linking
         - manual
     Origin:
-      description: ''
+      description: 'The origin'
       type: object
+      required:
+        - type
+        - creator
       properties:
         type:
           $ref: '#/components/schemas/OriginType'
@@ -260,6 +263,12 @@ components:
     Annotation:
       description: ''
       type: object
+      required:
+        - id
+        - origin
+        - created
+        - body
+        - target
       properties:
         id:
           type: string
@@ -268,10 +277,8 @@ components:
           $ref: '#/components/schemas/Origin'
         replaces:
           type: string
-          nullable: true
         replacedBy:
           type: string
-          nullable: true
         created:
           $ref: '#/components/schemas/DateTime'
           readOnly: true
