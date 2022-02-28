@@ -250,16 +250,11 @@ components:
       allOf:
         - $ref: '#/components/schemas/Selector'
         - type: object
-          required:
-            - temporal
-            - spatial
           properties:
             temporal:
               $ref: '#/components/schemas/TemporalFragmentSelector'
-              nullable: true
             spatial:
               $ref: '#/components/schemas/PercentSpatialSelector'
-              nullable: true
     Annotation:
       description: ''
       type: object
