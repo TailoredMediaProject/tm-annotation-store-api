@@ -280,14 +280,20 @@ components:
         replacedBy:
           type: string
         created:
-          $ref: '#/components/schemas/DateTime'
+          allOf:
+            - $ref: '#/components/schemas/DateTime'
           readOnly: true
         body:
-          $ref: '#/components/schemas/Body'
+          oneOf:
+            - $ref: '#/components/schemas/Body'
+            - type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Body'
         target:
-          type: array
-          items:
-            $ref: '#/components/schemas/Target'
+          oneOf:
+            - $ref: '#/components/schemas/Target'
+            - type: array
   parameters:
     AnnotationId:
       name: annotationId
