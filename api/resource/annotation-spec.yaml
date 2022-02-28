@@ -337,4 +337,4 @@ components:
                     type: string
               - type: object
                 additionalProperties:
-                  type: string
+                  $ref: '#/components/schemas/Annotation'
