@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## 2.0.18
+## 2.0.19
 *2022-03-02*
 * Changed annoation api*
 ## 2.0.9

@@ -13,12 +13,8 @@ paths:
       tags:
         - Annotation
       responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/responses/AnnotationListResponse'
+        default:
+          $ref: '#/components/responses/AnnotationListResponse'
     post:
       operationId: Create Annotations
       summary: Post one or multiple Annotations
@@ -27,13 +23,8 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/AnnotationRequestBody'
       responses:
-        201:
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/responses/IdResponse'
-
+        default:
+          $ref: '#/components/responses/IdResponse'
   /annotations/{annotationId}:
     get:
       operationId: getAnnotation
@@ -43,13 +34,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/AnnotationId'
       responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/responses/AnnotationListResponse'
-
+        default:
+          $ref: '#/components/responses/AnnotationResponse'
 tags:
   - name: Annotation
     description: ''
