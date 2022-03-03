@@ -286,11 +286,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Target'
-    IdFilter:
-      description: ''
-      type: array
-      items:
-        type: string
 
   parameters:
     AnnotationId:
@@ -303,8 +298,9 @@ components:
       name: idFilter
       in: query
       schema:
-        $ref: '#/components/schemas/IdFilter'
-      required: true
+        type: array
+        items:
+          type: string
   requestBodies:
     AnnotationRequestBody:
       description: 'Contains the Annotation to create, can be a single or or an array'
