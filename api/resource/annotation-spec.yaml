@@ -13,7 +13,7 @@ paths:
       tags:
         - Annotation
       parameters:
-        - $ref: '#/components/requestBodies/ListQuery'
+        - $ref: '#/components/parameters/IdFilter'
       responses:
         default:
           $ref: '#/components/responses/AnnotationListResponse'
@@ -286,16 +286,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Target'
-    ListQuery:
+    IdFilter:
       description: ''
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            properties:
-              id:
-                type: string
+      type: array
+      items:
+        type: string
 
   parameters:
     AnnotationId:
@@ -304,11 +299,11 @@ components:
       schema:
         $ref: '#/components/schemas/Id'
       required: true
-    ListQuery:
-      name: listQuery
+    IdFilter:
+      name: idFilter
       in: query
       schema:
-        $ref: '#/components/schemas/ListQuery'
+        $ref: '#/components/schemas/IdFilter'
       required: true
   requestBodies:
     AnnotationRequestBody:
