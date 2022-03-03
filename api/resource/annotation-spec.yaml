@@ -281,11 +281,9 @@ components:
           items:
             $ref: '#/components/schemas/Body'
         target:
-          oneOf:
-            - $ref: '#/components/schemas/Target'
-            - type: array
-              items:
-                $ref: '#/components/schemas/Target'
+          type: array
+          items:
+            $ref: '#/components/schemas/Target'
   parameters:
     AnnotationId:
       name: annotationId
