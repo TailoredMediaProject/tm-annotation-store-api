@@ -306,7 +306,7 @@ components:
       required: true
     ListQuery:
       name: listQuery
-      in: path
+      in: query
       schema:
         $ref: '#/components/schemas/ListQuery'
       required: true

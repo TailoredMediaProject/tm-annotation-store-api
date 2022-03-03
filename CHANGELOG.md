@@ -1,6 +1,6 @@
 # Changelog
 All notable changes to this project will be documented in this file.
-## 2.0.23
+## 2.0.24
 *2022-03-03*
 * Added annotation list query filter for ID
 ## 2.0.21
