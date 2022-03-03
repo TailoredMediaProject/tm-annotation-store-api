@@ -297,11 +297,9 @@ components:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '#/components/schemas/Annotation'
-              - type: array
-                items:
-                  $ref: '#/components/schemas/Annotation'
+            type: array
+            items:
+              $ref: '#/components/schemas/Annotation'
   responses:
     AnnotationResponse:
       description: ''
@@ -322,11 +320,6 @@ components:
       content:
         application/json:
           schema:
-            oneOf:
-              - type: object
-                properties:
-                  id:
-                    type: string
-              - type: object
-                additionalProperties:
-                  $ref: '#/components/schemas/Annotation'
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/Annotation'
