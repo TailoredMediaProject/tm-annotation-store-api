@@ -309,7 +309,7 @@ components:
       in: path
       schema:
         $ref: '#/components/schemas/ListQuery'
-      required: false
+      required: true
   requestBodies:
     AnnotationRequestBody:
       description: 'Contains the Annotation to create, can be a single or or an array'
