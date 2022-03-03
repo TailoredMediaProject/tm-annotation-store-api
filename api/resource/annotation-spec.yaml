@@ -322,9 +322,9 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            additionalProperties:
-              type: string
+            type: array
+            items:
+              $ref: '#/components/schemas/Annotation'
     IdResponse:
       description: 'The ID returned as sole id or as dictionary where the key is the old key and the value is the new key'
       content:
@@ -332,4 +332,4 @@ components:
           schema:
             type: object
             additionalProperties:
-              $ref: '#/components/schemas/Annotation'
+              type: string
