@@ -12,6 +12,8 @@ paths:
       summary: List all annotations
       tags:
         - Annotation
+      parameters:
+        - $ref: '#/components/requestBodies/ListQuery'
       responses:
         default:
           $ref: '#/components/responses/AnnotationListResponse'
@@ -284,6 +286,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Target'
+    ListQuery:
+      description: ''
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            properties:
+              id:
+                type: string
+
   parameters:
     AnnotationId:
       name: annotationId
@@ -291,6 +304,12 @@ components:
       schema:
         $ref: '#/components/schemas/Id'
       required: true
+    ListQuery:
+      name: listQuery
+      in: path
+      schema:
+        $ref: '#/components/schemas/ListQuery'
+      required: false
   requestBodies:
     AnnotationRequestBody:
       description: 'Contains the Annotation to create, can be a single or or an array'
