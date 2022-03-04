@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Resource Store API
-  version: 2.0.29
+  version: 2.0.30
 servers:
   - url: http://localhost:4000/resources/
     description: Local Developerment Server
@@ -14,6 +14,7 @@ paths:
         - Annotation
       parameters:
         - $ref: '#/components/parameters/IdFilter'
+        - $ref: '#/components/parameters/AssetUris'
       responses:
         default:
           $ref: '#/components/responses/AnnotationListResponse'
@@ -457,3 +458,13 @@ components:
         type: array
         items:
           type: string
+    AssetUris:
+      name: assetUris
+      in: query
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uri

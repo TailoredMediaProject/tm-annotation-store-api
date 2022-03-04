@@ -1,5 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## 2.0.30
+*2022-03-04*
+* Add assetUris query param to listAnnotations endpoint
 ## 2.0.29
 *2022-03-04*
 * Renamed Annotation MetadataBody to MetaDataBody
