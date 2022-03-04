@@ -1,5 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## 2.0.29
+*2022-03-04*
+* Renamed Annotation MetadataBody to MetaDataBody
+* Merged annotation-spec.yaml into spec.yaml
 ## 2.0.27
 *2022-03-03*
 * Added annotation list query filter for ID
