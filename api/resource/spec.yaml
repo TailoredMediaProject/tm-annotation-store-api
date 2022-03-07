@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Resource Store API
-  version: 2.0.30
+  version: 2.0.31
 servers:
   - url: http://localhost:4000/resources/
     description: Local Developerment Server
@@ -452,7 +452,7 @@ components:
         $ref: '#/components/schemas/Id'
       required: true
     IdFilter:
-      name: idFilter
+      name: ids
       in: query
       schema:
         type: array

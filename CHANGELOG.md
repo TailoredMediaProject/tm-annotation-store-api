@@ -1,5 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## 2.0.31
+*2022-03-07*
+* Changed idFilter query param to ids as this reflects its array capabilities and removes name redundancy
 ## 2.0.30
 *2022-03-04*
 * Add assetUris query param to listAnnotations endpoint
