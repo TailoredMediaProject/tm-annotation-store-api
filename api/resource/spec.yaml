@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Resource Store API
-  version: 2.0.32
+  version: 2.0.33
 servers:
   - url: http://localhost:4000/resources/
     description: Local Developerment Server
@@ -14,7 +14,6 @@ paths:
         - Annotation
       parameters:
         - $ref: '#/components/parameters/IdFilter'
-        - $ref: '#/components/parameters/TargetFilter'
         - $ref: '#/components/parameters/AssetUris'
       responses:
         default:
@@ -459,15 +458,8 @@ components:
         type: array
         items:
           type: string
-    TargetFilter:
-      description: Searches with one or more annotation IDs in target source
-      name: targets
-      in: query
-      schema:
-        type: array
-        items:
-          type: string
     AssetUris:
+      description: Contains either assetUris or annotation IDs to filter Annotation#Targets#Source
       name: assetUris
       in: query
       required: false

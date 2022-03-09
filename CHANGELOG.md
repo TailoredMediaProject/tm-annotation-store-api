@@ -1,5 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## 2.0.33
+*2022-03-09*
+* Update assetUri query filter documentation
 ## 2.0.32
 *2022-03-09*
 * Added targets query param to query for all annotations which have the query ids set as their target source
