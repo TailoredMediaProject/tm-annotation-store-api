@@ -1,5 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## 2.0.35
+*2022-05-08*
+* Add OriginType#Automatic
 ## 2.0.34
 *2022-03-17*
 * Add prod URL in spec.yaml
