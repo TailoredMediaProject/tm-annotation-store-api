@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Resource Store API
-  version: 2.0.35
+  version: 2.0.36
 servers:
   - url: http://localhost:4000/resources/
     description: Local Developerment Server
@@ -167,6 +167,14 @@ components:
         creator:
           type: string
           nullable: false
+    DomainType:
+      description: 'Specifies the unique domains of the annotation, this are the single values.'
+      type: string
+      enum:
+        - Video
+        - Audio
+        - Transcript
+        - Metadata
     BodyType:
       description: 'Specifies the unique body subclass'
       type: string
@@ -182,6 +190,7 @@ components:
         - id
         - confidence
         - type
+        - domains
       discriminator:
         propertyName: type
       properties:
@@ -193,6 +202,10 @@ components:
           maximum: 1
         type:
           $ref: '#/components/schemas/BodyType'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainType'
     TextBody:
       description: ''
       allOf:
