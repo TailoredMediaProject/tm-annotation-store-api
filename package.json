@@ -1,6 +1,6 @@
 {
   "name": "@redlink/tm-annotation-store-api",
-  "version": "2.0.36",
+  "version": "2.0.37",
   "description": "Repo contains all api specs for accessing tm-annotation-store",
   "keywords": ["redlink", "annotation-store", "tm-annotation-store-api", "tailored", "media", "tailoredmedia", "tailored-media"],
   "repository": {

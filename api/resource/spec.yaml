@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Resource Store API
-  version: 2.0.36
+  version: 2.0.37
 servers:
   - url: http://localhost:4000/resources/
     description: Local Developerment Server
@@ -171,10 +171,10 @@ components:
       description: 'Specifies the unique domains of the annotation, this are the single values.'
       type: string
       enum:
-        - Video
-        - Audio
-        - Transcript
-        - Metadata
+        - VIDEO
+        - AUDIO
+        - TRANSCRIPT
+        - METADATA
     BodyType:
       description: 'Specifies the unique body subclass'
       type: string

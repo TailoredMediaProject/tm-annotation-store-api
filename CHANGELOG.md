@@ -1,5 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## 2.0.37
+*2022-05-18*
+* Add uppercase enum values of DomainTypes for Java deserialization
 ## 2.0.36
 *2022-05-17*
 * Add DomainType array to ResourceBody
