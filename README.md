@@ -18,5 +18,5 @@
 To use specific versions follow the pattern `/{basePath}/{specPath}/{name}-{version}.{suffix}`, e.g. /api/graphql/schema-1.0.0.graphql.
 
 * *Resource-Store API*: [1.3.0](./CHANGELOG.md#2.0.9)
-* *Annotation-Store API*: [1.0.0](./CHANGELOG.md#2.0.37)
+* *Annotation-Store API*: [1.0.0](./CHANGELOG.md#2.0.38)
 * *GraphQL Schema*: [1.0.0](./CHANGELOG.md#1.0.0), [1.0.1](./CHANGELOG.md#1.0.1), [1.0.2](./CHANGELOG.md#1.0.2)

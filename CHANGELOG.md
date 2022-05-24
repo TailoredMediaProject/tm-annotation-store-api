@@ -1,5 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
+## 2.0.38
+*2022-05-24*
+* Add lowercase enum values of DomainTypes for Java deserialization
 ## 2.0.37
 *2022-05-18*
 * Add uppercase enum values of DomainTypes for Java deserialization
