@@ -1,7 +1,11 @@
 #Scalars
 scalar URL
-
 scalar Void
+scalar Literal
+scalar Date
+scalar RDF
+scalar Ebucore
+scalar Relation
 
 # Interfaces
 "All resources must have at least *id* and *type*"
@@ -15,48 +19,144 @@ interface BlankI {
     type: URL!
 }
 
+"All Annotations must have at least *id* and *origin*"
+interface AnnotationI{
+    id: URL!
+    replaces: URL
+    replacedBy: URL
+    created: Date!
+    origin: Origin!
+}
+
+interface MetadataI{
+    type: URL!
+    id: URL!
+    relation: URL!
+    value: [Literal!]
+    confidence: Float
+}
+
 # Unions
 "all supported targets"
-union Target = TargetResource | SpecificResource
+union Target = TargetResource | TargetFragment
 
 "all supported bodies"
-union Body = BodyResource | BodyText
+union Body = BodyResource | BodyText | BodyMetadata | BodyPart
 
 "all supported selectors"
 union Selector = TextPositionSelector | TextQuoteSelector | FragmentSelector
 
+"all literal types and an array of them for Metadata: value"
+union Literal = String | Float | Boolean | Date | Literal | RDF | Ebucore
+
+"Constant for all types of different relations"
+union Relation = RDF | Ebucore
+
 # Types
 "a annotation that links a target (thing to tag) with body (tag)"
-type Annotation implements ResourceI {
+type Annotation implements AnnotationI{
     id: URL!
-    type: URL!
+    origin: Origin!
+    replacedBy: URL
+    replaces: URL
+    created: Date!
     "tag, e.g. the resource 'Mick Schumacher'"
-    body: Body! #resource Barack Obama
+    body: [Body!]! #resource Barack Obama
     "thing to tag, e.g. a news article or a part of an image"
-    target: Target! #Part of a text
+    target: [Target!]! #Part of a text
 }
 
+"origin provides metadata about annotation"
+type Origin{
+    type: String!
+    creator: String!
+}
+
+# Body
 "a body represented by an entity, e.g. from an existing taxonomy"
 type BodyResource implements ResourceI {
     id: URL!
     type: URL!
-    label: String
+    resource: URL!
+    confidence: Float
 }
 
 "a freetext body (more for demo purposes)"
 type BodyText implements BlankI {
     type: URL!
     value: String!
+    confidence: Float
 }
 
-"a body represented by an entity, e.g. a news artile or an image"
-type TargetResource implements ResourceI {
+"a BodyPart for scene annotation"
+type BodyPart implements ResourceI{
     id: URL!
+    type: URL!
+    confidence: Float
+}
+
+"a metadata body"
+type BodyMetadata implements MetadataI{
+    type: URL!
+    id: URL!
+    relation: URL!
+    value: [Literal!]
+    confidence: Float
+}
+
+#    For `value: Literal` pair
+#    Use the String type and JSON.stringifying the data before setting it on the field.
+#    So everything gets stringified, and later you just JSON.parse the result and
+#    get back the desired object/array/boolean/ etc.
+
+#    getValue(): any {
+#        return JSON.parse(this.value);
+#    }
+
+
+#   New "Sub-Bodies":
+type BodySendung implements MetadataI{
+    type: URL!
+    id: URL!
+    relation: URL!
+    value: [Literal!]
+    confidence: Float
+}
+
+type BodyBeitrag implements MetadataI{
+    type: URL!
+    id: URL!
+    relation: URL!
+    value: [Literal!]
+    confidence: Float
+}
+
+type BodyShot implements MetadataI{
+    type: URL!
+    id: URL!
+    relation: URL!
+    value: [Literal!]
+    confidence: Float
+}
+
+type BodyKeyframe implements MetadataI{
+    type: URL!
+    id: URL!
+    relation: URL!
+    value: [Literal!]
+    confidence: Float
+}
+
+
+# Target
+"a body represented by an entity, e.g. a news artile or an image"
+type TargetResource implements BlankI {
+    source: URL!
     type: URL!
 }
 
 "a part of an entity, e.g. a fragment of an image or a part of a text"
-type SpecificResource implements BlankI {
+type TargetFragment implements BlankI {
     type: URL!
     "the base of the selector, e.g. the image resource"
     source: URL!
@@ -64,6 +164,7 @@ type SpecificResource implements BlankI {
     selector: [Selector!]!
 }
 
+# Selector
 "a selector to identify part of textual resources via start and end character"
 type TextPositionSelector implements BlankI {
     type: URL!
@@ -79,13 +180,39 @@ type TextQuoteSelector implements BlankI {
     suffix: String
 }
 
-"a selector to identify a part of a media resource. the value must be interpreted via the specified standard"
-type FragmentSelector implements BlankI {
+#"a selector to identify a part of a media resource. the value must be interpreted via the specified standard"
+#type FragmentSelector implements BlankI {
+#    type: URL!
+#    "the standard that is used to interpret the value"
+#    conformsTo: URL!
+#    "the value based on the standard"
+#    value: String!
+#}
+
+"a selector for a timeline on the video"
+type NptTimeSelector implements BlankI{
     type: URL!
-    "the standard that is used to interpret the value"
+    start: Float
+    end: Float
+}
+
+"a selector for specific region of the view"
+type PercentSpatialSelector implements BlankI{
+    type: URL!
+    x: Float!
+    y: Float!
+    w: Float!
+    h: Float!
+}
+
+"a selector for a clip: timeline + view"
+type FragmentSelector implements BlankI{
+    type: URL!
     conformsTo: URL!
-    "the value based on the standard"
-    value: String!
+    value: Literal
+    refinedBy: [PercentSpatialSelector]
+    temporal: NptTimeSelector
+    spatial: PercentSpatialSelector
 }
 
 # Query
@@ -104,10 +231,11 @@ input Filter {
 
 # Mutation
 type Mutation {
-    "add a annotation: select *one* type of body and *one* type of target (will be improved as soon as interfaces for inputs are supported"
+    "add an annotation: select *one* type of body and *one* type of target (will be improved as soon as interfaces for inputs are supported"
     addAnnotation(
         bodyResource: BodyResourceInput,
         bodyText: BodyTextInput,
+        bodyMetadata: BodyMetadataInput,
         targetResource: TargetResourceInput,
         targetTextSelector: TargetTextSelectorInput,
         targetFragmentSelector: TargetFragmentSelectorInput
@@ -128,6 +256,16 @@ input BodyResourceInput {
     id: URL!
     type: URL!
     label: String
+    relation: String
+    value: String
+}
+
+input BodyMetadataInput{
+    type: URL!
+    id: URL!
+    relation: String!
+    value: String!
+
 }
 
 "a textual body (like a comment), mostly for demo purposes"
