@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Resource Store API
-  version: 2.0.39
+  version: 2.0.40
 servers:
   - url: http://localhost:4000/resources/
     description: Local Developerment Server
@@ -189,6 +189,7 @@ components:
       required:
         - id
         - confidence
+        - quantification
         - type
         - domains
       discriminator:
@@ -200,6 +201,10 @@ components:
           type: number
           minimum: 0
           maximum: 1
+        quantification:
+          description: Contains the quantification for this Annotation. Zero is no quantification or for non quantifiable statements, negative values indicate to ignore the quantification, and all positive values represent the determined quantification.
+          type: integer
+          format: int64
         type:
           $ref: '#/components/schemas/BodyType'
         domains:
@@ -387,7 +392,6 @@ components:
         replacedBy:
           type: string
         created:
-          readOnly: true
           $ref: '#/components/schemas/DateTime'
         body:
           type: array
